@@ -5,6 +5,7 @@ public class GateEffectScript : MonoBehaviour {
 
 	void Awake()
 	{
-		Destroy (gameObject, GetComponent<ParticleSystem> ().duration);
+		Debug.Log("AWAKE");
+		Destroy (gameObject, GetComponentInChildren<ParticleSystem>().duration);
 	}
 }

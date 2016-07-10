@@ -24,28 +24,11 @@ public class PlayerMovement : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		// If player is on the ground
-		if (controller.isGrounded)
-		{
-			// Get the input (ZQSD)
-			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-			moveDirection = transform.TransformDirection(moveDirection);
-			moveDirection *= speed;
-
-			/* JUMP
-			if (Input.GetButton("Jump"))
-				moveDirection.y = jumpSpeed;
-			*/
-		}
 	}
 
 	void Update()
 	{
 		CheckInputs ();
-
-		// Move character
-		moveDirection.y -= gravity * Time.deltaTime;
-		controller.Move(moveDirection * Time.deltaTime);
 
 		if (IsTeleporting)
 		{
