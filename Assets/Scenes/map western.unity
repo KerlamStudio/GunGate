@@ -126,7 +126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 472716, guid: a03a2940d32dd6d40b1ecbcf090f16e4, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 472716, guid: a03a2940d32dd6d40b1ecbcf090f16e4, type: 2}
       propertyPath: m_LocalScale.x
@@ -1147,7 +1147,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a60e8dd301d97aa42ad952f22200e0e4, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 43.4
+      value: 43.1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a60e8dd301d97aa42ad952f22200e0e4, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1167,7 +1167,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a60e8dd301d97aa42ad952f22200e0e4, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a60e8dd301d97aa42ad952f22200e0e4, type: 2}
       propertyPath: m_LocalScale.x
@@ -1448,8 +1448,20 @@ Prefab:
       objectReference: {fileID: 1867199786}
     - target: {fileID: 11465018, guid: dbaf028d5c421de4888f622a3fefafd8, type: 2}
       propertyPath: speed
-      value: 20
+      value: 35
       objectReference: {fileID: 0}
+    - target: {fileID: 11489756, guid: dbaf028d5c421de4888f622a3fefafd8, type: 2}
+      propertyPath: speed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11489756, guid: dbaf028d5c421de4888f622a3fefafd8, type: 2}
+      propertyPath: teleportTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11489756, guid: dbaf028d5c421de4888f622a3fefafd8, type: 2}
+      propertyPath: laser
+      value: 
+      objectReference: {fileID: 172634, guid: 5b4221f66bdfb6944ae976af021fe424, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dbaf028d5c421de4888f622a3fefafd8, type: 2}
   m_IsPrefabParent: 0
