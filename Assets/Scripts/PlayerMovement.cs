@@ -3,16 +3,18 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {	
+	public float speed = 6.0F;
+	public float jumpSpeed = 8.0F;
+	public float gravity = 9.82F;
 	public Camera cam;
 	public CharacterController controller;
 	public GameObject GateEffect;
-	public GameObject laser;
-
 
 	public float teleportTime;
 	private float teleportTimeLeft;
 	private bool IsTeleporting = false;
 	private Vector3 teleportPosition;
+	private Vector3 moveDirection = Vector3.zero;
 
 
 	void Start()
@@ -45,38 +47,22 @@ public class PlayerMovement : MonoBehaviour
 	void CheckInputs()
 	{
 		// Teleportation
-		if (Input.GetMouseButtonDown (0))
+		if (Input.GetMouseButtonUp (0))
 		{
-			Teleport();
-		}
-
-		if(Input.GetMouseButtonDown(1))
-		{
-			Shoot();
+			Teleport ();
 		}
 	}
 
-	Vector3 GetHitPoint()
+	void Teleport()
 	{
-
 		Ray ray =  cam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 
 		if (Physics.Raycast (ray, out hit, Mathf.Infinity))
 		{
-			return hit.point;
-		}
-		return Vector3.zero;
-	}
-
-	void Teleport()
-	{
-		Vector3 hit = GetHitPoint();
-		if (hit != Vector3.zero)
-		{
 			IsTeleporting = true;
-			teleportPosition = hit;
-			SpawnEffect (GateEffect, hit + new Vector3(0, controller.bounds.size.y / 2));
+			teleportPosition = hit.point;
+			SpawnEffect (GateEffect, hit.point + new Vector3(0, controller.bounds.size.y / 2));
 		}
 	}
 
@@ -88,16 +74,5 @@ public class PlayerMovement : MonoBehaviour
 	void SpawnEffect(GameObject effect, Vector3 pos)
 	{
 		Instantiate (effect, pos, effect.transform.rotation);
-	}
-
-	void Shoot()
-	{
-		Shoot(controller.transform.position);
-	}
-
-	void Shoot(Vector3 origin)
-	{
-		transform.LookAt(GetHitPoint());
-		Instantiate(laser, origin, controller.transform.rotation);
 	}
 }
