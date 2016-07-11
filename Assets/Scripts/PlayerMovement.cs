@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void Update()
 	{
-		CheckInputs ();
+		CheckInputs();
 
 		if (IsTeleporting)
 		{
@@ -50,17 +50,20 @@ public class PlayerMovement : MonoBehaviour
 		{
 			Teleport ();
 		}
+
 		if(Input.GetMouseButtonDown(1))
-		{
+		{Debug.Log("1");
 			transform.LookAt(GetHitPoint());
+			Quaternion rot = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
+
 			GameObject Bullet;
 
 			Bullet = Shot1;
 			//Fire
-			GameObject s1 = (GameObject)Instantiate(Bullet, this.transform.position + new Vector3(0,5f,0), this.transform.rotation);
+			GameObject s1 = (GameObject)Instantiate(Bullet, this.transform.position + new Vector3(0,5f,0), rot);
 			s1.GetComponent<BeamParam>().SetBeamParam(this.GetComponent<BeamParam>());
 
-			GameObject wav = (GameObject)Instantiate(Wave, this.transform.position + new Vector3(0,5f,0), this.transform.rotation);
+			GameObject wav = (GameObject)Instantiate(Wave, this.transform.position + new Vector3(0,5f,0), rot);
 			wav.transform.localScale *= 0.25f;
 			wav.transform.Rotate(Vector3.left, 90.0f);
 			wav.GetComponent<BeamWave>().col = this.GetComponent<BeamParam>().BeamColor;
