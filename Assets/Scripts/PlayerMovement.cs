@@ -3,16 +3,17 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {	
+	public GameObject Shot1;
+	public GameObject Wave;
 	public Camera cam;
 	public CharacterController controller;
 	public GameObject GateEffect;
-	public GameObject laser;
-
 
 	public float teleportTime;
 	private float teleportTimeLeft;
 	private bool IsTeleporting = false;
 	private Vector3 teleportPosition;
+	private Vector3 moveDirection = Vector3.zero;
 
 
 	void Start()
@@ -45,20 +46,29 @@ public class PlayerMovement : MonoBehaviour
 	void CheckInputs()
 	{
 		// Teleportation
-		if (Input.GetMouseButtonDown (0))
+		if (Input.GetMouseButtonUp (0))
 		{
-			Teleport();
+			Teleport ();
 		}
-
 		if(Input.GetMouseButtonDown(1))
 		{
-			Shoot();
+			transform.LookAt(GetHitPoint());
+			GameObject Bullet;
+
+			Bullet = Shot1;
+			//Fire
+			GameObject s1 = (GameObject)Instantiate(Bullet, this.transform.position + new Vector3(0,5f,0), this.transform.rotation);
+			s1.GetComponent<BeamParam>().SetBeamParam(this.GetComponent<BeamParam>());
+
+			GameObject wav = (GameObject)Instantiate(Wave, this.transform.position + new Vector3(0,5f,0), this.transform.rotation);
+			wav.transform.localScale *= 0.25f;
+			wav.transform.Rotate(Vector3.left, 90.0f);
+			wav.GetComponent<BeamWave>().col = this.GetComponent<BeamParam>().BeamColor;
 		}
 	}
 
 	Vector3 GetHitPoint()
 	{
-
 		Ray ray =  cam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 
@@ -71,12 +81,14 @@ public class PlayerMovement : MonoBehaviour
 
 	void Teleport()
 	{
-		Vector3 hit = GetHitPoint();
-		if (hit != Vector3.zero)
+		Ray ray =  cam.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if (Physics.Raycast (ray, out hit, Mathf.Infinity))
 		{
 			IsTeleporting = true;
-			teleportPosition = hit;
-			SpawnEffect (GateEffect, hit + new Vector3(0, controller.bounds.size.y / 2));
+			teleportPosition = hit.point;
+			SpawnEffect (GateEffect, hit.point + new Vector3(0, controller.bounds.size.y / 2));
 		}
 	}
 
@@ -88,16 +100,5 @@ public class PlayerMovement : MonoBehaviour
 	void SpawnEffect(GameObject effect, Vector3 pos)
 	{
 		Instantiate (effect, pos, effect.transform.rotation);
-	}
-
-	void Shoot()
-	{
-		Shoot(controller.transform.position);
-	}
-
-	void Shoot(Vector3 origin)
-	{
-		transform.LookAt(GetHitPoint());
-		Instantiate(laser, origin, controller.transform.rotation);
 	}
 }
