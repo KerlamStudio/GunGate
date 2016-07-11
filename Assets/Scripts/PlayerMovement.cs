@@ -3,9 +3,8 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {	
-	public float speed = 6.0F;
-	public float jumpSpeed = 8.0F;
-	public float gravity = 9.82F;
+	public GameObject Shot1;
+	public GameObject Wave;
 	public Camera cam;
 	public CharacterController controller;
 	public GameObject GateEffect;
@@ -51,6 +50,33 @@ public class PlayerMovement : MonoBehaviour
 		{
 			Teleport ();
 		}
+		if(Input.GetMouseButtonDown(1))
+		{
+			transform.LookAt(GetHitPoint());
+			GameObject Bullet;
+
+			Bullet = Shot1;
+			//Fire
+			GameObject s1 = (GameObject)Instantiate(Bullet, this.transform.position + new Vector3(0,5f,0), this.transform.rotation);
+			s1.GetComponent<BeamParam>().SetBeamParam(this.GetComponent<BeamParam>());
+
+			GameObject wav = (GameObject)Instantiate(Wave, this.transform.position + new Vector3(0,5f,0), this.transform.rotation);
+			wav.transform.localScale *= 0.25f;
+			wav.transform.Rotate(Vector3.left, 90.0f);
+			wav.GetComponent<BeamWave>().col = this.GetComponent<BeamParam>().BeamColor;
+		}
+	}
+
+	Vector3 GetHitPoint()
+	{
+		Ray ray =  cam.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if (Physics.Raycast (ray, out hit, Mathf.Infinity))
+		{
+			return hit.point;
+		}
+		return Vector3.zero;
 	}
 
 	void Teleport()
